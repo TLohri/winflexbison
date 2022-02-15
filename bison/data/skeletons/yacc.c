@@ -91,7 +91,7 @@ m4_define([b4_lac_flag],
 
 # Stack parameters.
 m4_define_default([b4_stack_depth_max], [10000])
-m4_define_default([b4_stack_depth_init],  [200])
+m4_define_default([b4_stack_depth_init],  [1])
 
 
 # b4_yyerror_arg_loc_if(ARG)
@@ -566,13 +566,14 @@ b4_push_if([], [b4_lac_if([], [[
 #   endif
 #  endif
 #  ifndef YYMALLOC
-#   define YYMALLOC malloc
+#   include "memory_management.h"
+#   define YYMALLOC my_alloc
 #   if ! defined malloc && ! defined EXIT_SUCCESS
 void *malloc (YYSIZE_T); /* INFRINGES ON USER NAME SPACE */
 #   endif
 #  endif
 #  ifndef YYFREE
-#   define YYFREE free
+#   define YYFREE my_free
 #   if ! defined free && ! defined EXIT_SUCCESS
 void free (void *); /* INFRINGES ON USER NAME SPACE */
 #   endif
